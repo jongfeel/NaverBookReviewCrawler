@@ -45,8 +45,8 @@ namespace NaverBookReviewCrawler
 
             string authors = "";
             string contents = "";
-            int authorCount = 1;
             int contentsCount = 1;
+            int contentsLength = 0;
 
             while (IsContinue)
             {
@@ -80,8 +80,8 @@ namespace NaverBookReviewCrawler
                         if (index != -1)
                         {
                             author = author.Insert(index, ", ");
-                        }                        
-                        authors += author + "\r\n";
+                        }
+                        authors += author + ", 리뷰글자수: " + contentsLength + "\r\n";
 
                         IsAuthorExist = true;
                     }
@@ -89,6 +89,7 @@ namespace NaverBookReviewCrawler
                     if (item.Id.Contains("review_text_"))
                     {
                         string replaced = item.InnerText.Replace('\n', ' ');
+                        contentsLength = replaced.Length;
                         contents += "Review " + contentsCount++ + "----------------------------";
                         contents += replaced + "\r\n";
 
